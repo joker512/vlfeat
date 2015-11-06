@@ -64,6 +64,11 @@ DLL_SUFFIX := dylib
 DLL_LDFLAGS += -m64
 endif
 
+# iOS
+ifeq "$(ARCH)" "$(filter $(ARCH),armv7 armv7s arm64)"
+DLL_SUFFIX := dylib
+endif
+
 # Linux-32
 ifeq ($(ARCH),glnx86)
 DLL_SUFFIX := so

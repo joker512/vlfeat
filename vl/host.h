@@ -253,7 +253,6 @@ defined(__DOXYGEN__)
 #if defined(_M_X64)    || \
     defined(__amd64__) || \
     defined(__amd64)   || \
-    defined(__x86_64)  || \
     defined(__x86_64)
 #define VL_ARCH_X64
 #endif

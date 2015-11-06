@@ -232,6 +232,15 @@ STD_CFLAGS += -m$(march) -D_GNU_SOURCE -fno-stack-protector
 STD_LDFLAGS += -m$(march) -Wl,--rpath,\$$ORIGIN/ -Wl,--as-needed
 endif
 
+# iOS
+ifeq "$(ARCH)" "$(filter $(ARCH),armv7 armv7s arm64)"
+SDKROOT ?= $(shell xcrun -sdk iphoneos --show-sdk-path)
+STD_CFLAGS += -target $(ARCH)-apple-darwin -isysroot $(SDKROOT)
+STD_LDFLAGS += -target $(ARCH)-apple-darwin -Wl,-syslibroot,$(SDKROOT)
+override DISABLE_SSE2 := "yes"
+override DISABLE_AVX := "yes"
+endif
+
 # Convert back DISALBE_*="no" flags to be empty
 ifeq "$(DISABLE_SSE2)" "no"
 override DISABLE_SSE2:=
@@ -326,8 +335,13 @@ no_dep_targets := clean archclean distclean info help
 
 include make/dll.mak
 include make/bin.mak
+
+# arm build doesn't need these features
+ifneq "$(ARCH)" "$(filter $(ARCH),armv7 armv7s arm64)"
 include make/matlab.mak
 include make/octave.mak
+endif
+
 include make/doc.mak
 include make/dist.mak
 

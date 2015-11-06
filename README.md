@@ -51,8 +51,20 @@ The toolbox should be laregly compatible with GNU Octave, an open
 source MATLAB equivalent. However, the binary distribution does not
 ship with pre-built GNU Octave MEX files. To compile them use
 
-    > cd <vlfeat directory>
+    > cd <vlfeat_directory>
     > make MKOCTFILE=<path to the mkoctfile program>
+
+## iOS support
+
+To compile library for iOS use the following command:
+
+    > cd <vlfeat_directory>
+    > make ARCH=<arch_name>
+
+The supported architectures are `armv7`, `armv7s` and `arm64`. You can find
+the necessary one using the [iOS support matrix](http://iossupportmatrix.com).
+
+The compiled library will be located in `<vlfeat_directory>/bin/<arch_name>`
 
 # Changes
 
